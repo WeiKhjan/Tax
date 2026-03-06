@@ -2,8 +2,9 @@
 Clients/
 ABC TRADING SDN BHD YA 2025/
 
-# Claude Code config
-.claude/
+# Claude Code config (exclude settings, include skills)
+.claude/*
+!.claude/skills/
 
 # Misc
 nul
