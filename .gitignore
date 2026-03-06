@@ -1,0 +1,13 @@
+# Client work folders - confidential, do not push
+Clients/
+ABC TRADING SDN BHD YA 2025/
+
+# Claude Code config
+.claude/
+
+# Misc
+nul
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
