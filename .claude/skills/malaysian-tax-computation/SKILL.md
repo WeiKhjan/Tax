@@ -168,6 +168,65 @@ WHT must be remitted to LHDN within **1 month** from the date of payment.
 
 ---
 
+## Master Data Variable System
+
+When generating working papers, **always create `master_data.json`** alongside the .md files and use `{{variable}}` placeholders for all repeated data.
+
+### master_data.json Generation
+
+Create this file in the client folder root with all engagement variables:
+
+```json
+{
+  "_meta": { "version": "1.0", "lastModified": "ISO_TIMESTAMP" },
+  "variables": {
+    "company_name": { "value": "CLIENT NAME", "label": "Company Name", "category": "company", "format": "text" },
+    "gross_income": { "value": 100000, "label": "Gross Income", "category": "financial", "format": "currency" }
+  },
+  "categories": {
+    "company": { "label": "Company Identity", "order": 1 },
+    "financial": { "label": "Key Financial Figures", "order": 2 },
+    "directors": { "label": "Directors & Shareholders", "order": 3 }
+  }
+}
+```
+
+### Core Variables (always generate)
+
+| Category | Variables |
+|----------|-----------|
+| Company | company_name, company_reg_no, tax_file_no, ya_year, basis_period, basis_period_from, basis_period_to, fye_date, registered_address, business_address, nature_of_business, business_code, paid_up_capital, source_of_income, form_c_due_date |
+| Financial | gross_income, total_expenditure, allowable_deductions, adjusted_income (or adjusted_loss), capital_allowance, chargeable_income, tax_payable, cp204_total_paid, cp204_monthly, tax_refundable, director_fee_total |
+| Directors | director_N_name, director_N_nric, director_N_nationality, director_N_designation (for each director) |
+
+### Dynamic Variables (add per engagement)
+
+Add business-specific variables as needed:
+- **Rental business**: property_address, property_name, property_type, property_cost, tenant_name, monthly_rental
+- **Trading business**: motor_vehicle_cost, hp_monthly, inventory_value
+- **Services business**: staff_cost_total, professional_fees
+
+### Variable Syntax in .md Files
+
+Use `{{variable_name}}` in markdown. The viewer substitutes values at render time.
+
+```markdown
+| Company | {{company_name}} |
+| Gross Income | {{gross_income}} |
+| Adjusted Loss | {{adjusted_loss|bracket}} |
+```
+
+Format modifiers: `|rm` (RM prefix), `|bracket` (negative in brackets), `|rm_bracket` (both), `|nil` (zero as NIL), `|raw` (no formatting)
+
+### Format Types
+
+- `text` — render as-is
+- `currency` — `43,600.00`
+- `currency_bracket` — negative as `(10,063.75)`
+- `currency_nil` — zero as `NIL`
+
+---
+
 ## Common Add-backs (Non-Allowable Expenses)
 
 - Depreciation (replaced by capital allowances)
