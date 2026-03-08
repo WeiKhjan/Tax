@@ -70,6 +70,24 @@ The viewer includes a variable substitution system:
 - Includes an "Insert Variable" button in the WYSIWYG editor toolbar
 - Server endpoints: `GET /api/master` and `PUT /api/master` in `server.py`
 
+### Format Modifier Reference
+
+| Modifier | Input Value | Output | Use Case |
+|----------|-------------|--------|----------|
+| *(none)* | `72900` | `72,900` | Standard currency display |
+| `\|rm` | `72900` | `RM 72,900` | Currency with RM prefix |
+| `\|bracket` | `-10064` | `(10,064)` | Negative amounts in brackets |
+| `\|rm_bracket` | `-10064` | `RM (10,064)` | RM prefix + brackets for negatives |
+| `\|nil` | `0` | `NIL` | Zero values displayed as NIL |
+| `\|raw` | `72900` | `72900` | Raw number, no formatting |
+
+### Calculated Variable Styling
+Variables with a `formula` field in `master_data.json` are displayed with a **teal underline** (vs purple for direct variables):
+- `.var-inline` — purple underline (`#7c3aed`) for direct/input variables
+- `.var-calc` — teal underline (`#0891b2`) for calculated/derived variables
+- Clicking a calculated variable shows the formula with resolved values in the popover
+- Add `"formula": "var_a + var_b"` to any variable definition to mark it as calculated
+
 ### WYSIWYG Editor
 The viewer uses Toast UI Editor for rich text editing of .md files:
 - Edit button switches to WYSIWYG mode (not raw markdown textarea)
@@ -226,7 +244,8 @@ See **VIEWER_TEMPLATE.md** for the complete HTML template with all CSS, JavaScri
 - [ ] Search function works
 - [ ] All figures are mathematically accurate
 - [ ] `master_data.json` present with all engagement variables
-- [ ] .md files use `{{variable}}` placeholders for repeated data
+- [ ] .md files use `{{variable}}` placeholders for ALL financial figures (no hardcoded numbers)
+- [ ] Variable coverage validated: search for `\d{1,3}(,\d{3})+` patterns — none should remain
 - [ ] Master Data Editor button visible in nav panel
 - [ ] Toast UI WYSIWYG editor CDN links included
 - [ ] `server.py` includes GET/PUT `/api/master` endpoints
