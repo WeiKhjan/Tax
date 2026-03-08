@@ -27,6 +27,7 @@ Note: When only schedule *content* is updated (not structure), HTML regeneration
 All working papers reside under `[CLIENT NAME] YA [YEAR]/`:
 
 ```
+master_data.json             Master data variables (shared across all .md files)
 01_TAX_COMPUTATION/          TC_  prefix  (Main Tax Computation)
 02_ANALYSIS_OF_ACCOUNTS/     AA_  prefix  (Schedule A)
 03_CAPITAL_ALLOWANCE/        CA_  prefix  (Schedule B)
@@ -37,6 +38,7 @@ All working papers reside under `[CLIENT NAME] YA [YEAR]/`:
 08_SUPPORTING_WORKINGS/      SW_  prefix
 09_PRIOR_YEAR_REFERENCE/     PY_  prefix
 tax_viewer.html
+server.py
 START_VIEWER.bat
 ```
 
@@ -56,7 +58,24 @@ START_VIEWER.bat
 - Active item highlight: `#1e40af` background, `#60a5fa` left border
 
 ### Dependencies
+- Toast UI Editor CSS: `https://uicdn.toast.com/editor/3.2.2/toastui-editor.min.css`
+- Toast UI Editor JS: `https://uicdn.toast.com/editor/3.2.2/toastui-editor-all.min.js`
 - marked.js: `https://cdn.jsdelivr.net/npm/marked/marked.min.js`
+
+### Master Data Variable System
+The viewer includes a variable substitution system:
+- Loads `master_data.json` on startup via `GET /api/master`
+- Replaces `{{variable_name}}` and `{{variable_name|modifier}}` in markdown before rendering
+- Includes a Master Data Editor panel (purple button in nav) for editing variables
+- Includes an "Insert Variable" button in the WYSIWYG editor toolbar
+- Server endpoints: `GET /api/master` and `PUT /api/master` in `server.py`
+
+### WYSIWYG Editor
+The viewer uses Toast UI Editor for rich text editing of .md files:
+- Edit button switches to WYSIWYG mode (not raw markdown textarea)
+- Tables render as actual tables, bold text appears bold while editing
+- `tuiEditor.getMarkdown()` extracts clean markdown on save
+- `{{variable}}` placeholders are preserved in .md files (not substituted)
 
 ### Sections Array
 The `sections` JavaScript array maps folders to files. Each entry:
@@ -206,3 +225,8 @@ See **VIEWER_TEMPLATE.md** for the complete HTML template with all CSS, JavaScri
 - [ ] 6 main deliverables accessible: TC, Sch A, Sch B, Sch C, Sch D, Sch E
 - [ ] Search function works
 - [ ] All figures are mathematically accurate
+- [ ] `master_data.json` present with all engagement variables
+- [ ] .md files use `{{variable}}` placeholders for repeated data
+- [ ] Master Data Editor button visible in nav panel
+- [ ] Toast UI WYSIWYG editor CDN links included
+- [ ] `server.py` includes GET/PUT `/api/master` endpoints
