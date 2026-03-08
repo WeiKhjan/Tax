@@ -218,12 +218,99 @@ Use `{{variable_name}}` in markdown. The viewer substitutes values at render tim
 
 Format modifiers: `|rm` (RM prefix), `|bracket` (negative in brackets), `|rm_bracket` (both), `|nil` (zero as NIL), `|raw` (no formatting)
 
+### Calculated Variables (Formula)
+
+For derived/calculated figures, add a `formula` field to show the calculation chain:
+
+```json
+"gross_profit": {
+  "value": 2908556,
+  "label": "Gross Profit",
+  "category": "financial",
+  "format": "currency",
+  "formula": "revenue - cost_of_goods_sold"
+},
+"director_1_shareholding_pct": {
+  "value": "50%",
+  "label": "Director 1 - Shareholding %",
+  "category": "directors",
+  "format": "text",
+  "formula": "director_1_shares / paid_up_capital"
+}
+```
+
+The viewer renders calculated variables with a **teal underline** (vs purple for input variables), and the popover shows the formula with resolved values.
+
 ### Format Types
 
 - `text` — render as-is
 - `currency` — `43,600.00`
 - `currency_bracket` — negative as `(10,063.75)`
 - `currency_nil` — zero as `NIL`
+
+---
+
+## MANDATORY: Variable Usage Rules
+
+**EVERY monetary figure in .md files MUST use `{{variable}}` placeholders — no exceptions.**
+
+When generating or editing working papers, NEVER hardcode financial figures. All numbers must come from `master_data.json` via the variable substitution system.
+
+### CORRECT vs INCORRECT Examples
+
+```markdown
+<!-- INCORRECT — hardcoded figures -->
+| Revenue | 4,020,565 |
+| Gross Profit | **2,908,556** |
+| Tax Payable | **386,744** |
+| Depreciation - Office Equipment | 1,500 |
+
+<!-- CORRECT — using variables -->
+| Revenue | {{revenue}} |
+| Gross Profit | **{{gross_profit}}** |
+| Tax Payable | **{{tax_payable}}** |
+| Depreciation - Office Equipment | {{depreciation_office_equipment}} |
+
+<!-- CORRECT — with format modifiers -->
+| Capital Allowance | ({{capital_allowance}}) |         <!-- renders as (72,900) -->
+| CP204 Total Paid | {{cp204_total_paid|nil}} |          <!-- renders as NIL when 0 -->
+| Adjusted Loss | {{adjusted_loss|bracket}} |             <!-- renders as (xxx) for negatives -->
+| Paid-up Capital | {{paid_up_capital|rm}} |              <!-- renders as RM 500,000 -->
+```
+
+### Comprehensive Variable Table
+
+| Category | Variable | Description |
+|----------|----------|-------------|
+| **P&L - Revenue** | `revenue`, `gross_sales_incl_sst`, `sst_output_tax` | Top-line figures |
+| **P&L - COGS** | `cost_of_goods_sold`, `opening_inventory`, `purchases`, `closing_inventory` | Cost of sales components |
+| **P&L - Gross** | `gross_profit`, `gross_profit_margin` | Gross profit figures |
+| **P&L - OpEx** | `salaries_wages`, `epf_employer`, `socso_employer`, `eis_employer` | Staff costs |
+| **P&L - OpEx** | `director_remuneration`, `rental_office`, `utilities_electricity`, `utilities_water`, `utilities_internet` | Operating costs |
+| **P&L - OpEx** | `office_supplies`, `printing_stationery`, `telephone_communication`, `petrol_toll`, `parking` | Office/transport |
+| **P&L - OpEx** | `entertainment_expense`, `staff_welfare`, `professional_fees_audit`, `professional_fees_tax`, `professional_fees_secretarial` | Other operating |
+| **P&L - OpEx** | `total_operating_expenses`, `staff_costs_total`, `utilities_total`, `professional_fees_total`, `transport_total` | Sub-totals |
+| **P&L - Other** | `bank_charges`, `interest_expense_loan`, `interest_expense_hp`, `insurance_expense` | Finance costs |
+| **P&L - Other** | `depreciation_office_equipment`, `depreciation_computer`, `depreciation_furniture`, `depreciation_motor_vehicle`, `depreciation_addback` | Depreciation items |
+| **P&L - Other** | `repairs_maintenance`, `advertising_promotion`, `bad_debts_general` | Other expenses |
+| **P&L - Other** | `total_other_expenses`, `interest_expense_total` | Sub-totals |
+| **Tax Comp** | `net_profit_before_tax`, `total_add_back`, `adjusted_income`, `chargeable_income` | Core computation |
+| **Tax Comp** | `tax_payable`, `tax_first_150k`, `tax_next_450k`, `balance_chargeable_income`, `tax_balance` | Tax calculation |
+| **Tax Comp** | `effective_tax_rate`, `net_profit_margin` | Ratios |
+| **CA - Per Asset** | `ca_office_equipment_cost`, `ca_office_equipment_ia`, `ca_office_equipment_aa`, `ca_office_equipment_total_ca`, `ca_office_equipment_twdv_cf` | Office equipment |
+| **CA - Per Asset** | `ca_computer_cost`, `ca_computer_ia`, `ca_computer_aa`, `ca_computer_total_ca`, `ca_computer_twdv_cf` | Computer & software |
+| **CA - Per Asset** | `ca_furniture_cost`, `ca_furniture_ia`, `ca_furniture_aa`, `ca_furniture_total_ca`, `ca_furniture_twdv_cf` | Furniture & fittings |
+| **CA - Per Asset** | `ca_motor_vehicle_cost`, `ca_motor_vehicle_ia`, `ca_motor_vehicle_aa`, `ca_motor_vehicle_total_ca`, `ca_motor_vehicle_twdv_cf` | Motor vehicle |
+| **CA - Totals** | `ca_total_cost`, `ca_initial_allowance_total`, `ca_annual_allowance_total`, `capital_allowance`, `ca_total_twdv_cf` | CA summary |
+| **CA - Other** | `ca_dep_variance` | Depreciation vs CA difference |
+| **CP204** | `cp204_total_paid`, `cp204_ya2026_estimate`, `cp204_ya2026_monthly`, `balance_tax_payable` | Instalment scheme |
+
+### Quality Checklist Addition
+
+Before delivering any working paper set, verify:
+- [ ] **No hardcoded financial figures in .md files** — search for `\d{1,3}(,\d{3})+` patterns
+- [ ] Every figure traces back to a `{{variable}}` in `master_data.json`
+- [ ] Format modifiers used appropriately (`|rm`, `|bracket`, `|nil`)
 
 ---
 
