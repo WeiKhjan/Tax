@@ -1,6 +1,6 @@
 ---
 name: pdf-operations
-description: Export Malaysian tax working papers to PDF, annotate General Ledger documents, and generate print-ready reports for LHDN submission. Covers markdown-to-PDF pipeline, Chrome headless printing, PyMuPDF annotations, and Win32com Excel-to-PDF automation.
+description: Export Malaysian tax working papers to PDF, annotate General Ledger documents, and generate print-ready reports for LHDN submission. Covers markdown-to-PDF pipeline, Chrome headless printing, and PyMuPDF annotations.
 ---
 
 # PDF Operations Skill
@@ -85,20 +85,6 @@ Enhanced GL annotation script with improved capabilities.
 python scripts/annotate_gl_v2.py --pdf gl.pdf --config annotations.json --output gl_annotated.pdf
 ```
 
-### `print_kilat_ya2021.py`
-
-Automates Excel-to-PDF conversion via Win32com COM automation (Windows only).
-
-- Opens Excel workbooks using `win32com.client`
-- Configures page setup (orientation, margins, print area, scaling)
-- Prints specified sheets to PDF via the Windows print-to-PDF driver
-- Handles multi-sheet workbooks with consistent formatting
-
-**Usage:**
-```bash
-python scripts/print_kilat_ya2021.py --excel workbook.xlsx --sheets "CA,TC" --output output.pdf
-```
-
 ## Key Capabilities
 
 | Capability | Script | Library |
@@ -107,7 +93,6 @@ python scripts/print_kilat_ya2021.py --excel workbook.xlsx --sheets "CA,TC" --ou
 | Print-ready HTML | `export_to_print_pdf.py` | markdown |
 | Chrome headless PDF | `generate_pdf_direct.py` | subprocess (Chrome/Edge CLI) |
 | GL PDF annotation | `annotate_gl.py`, `annotate_gl_v2.py` | PyMuPDF (fitz) |
-| Excel to PDF | `print_kilat_ya2021.py` | win32com (Windows only) |
 
 ## Dependencies
 
@@ -115,17 +100,15 @@ python scripts/print_kilat_ya2021.py --excel workbook.xlsx --sheets "CA,TC" --ou
 weasyprint
 PyMuPDF
 markdown
-pywin32  # Windows only, for win32com
 ```
 
 Install with:
 ```bash
-pip install weasyprint PyMuPDF markdown pywin32
+pip install weasyprint PyMuPDF markdown
 ```
 
 ## Notes
 
 - Chrome or Edge must be installed for `generate_pdf_direct.py`
-- `print_kilat_ya2021.py` requires Windows with Microsoft Excel installed
 - All scripts assume working papers follow the standard folder structure defined in CLAUDE.md
 - Output PDFs are formatted for A4 paper, suitable for physical filing and LHDN submission

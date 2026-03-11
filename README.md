@@ -22,7 +22,7 @@ pip install openpyxl PyMuPDF markdown
 
 | Package | PyPI Name | Used By |
 |---------|-----------|---------|
-| openpyxl | `openpyxl` | Excel workbook generation (PBC lists, tax computations, query lists) |
+| openpyxl | `openpyxl` | Excel workbook generation (PBC checklists, query lists) |
 | PyMuPDF | `PyMuPDF` | PDF annotation and GL document markup (imported as `fitz`) |
 | markdown | `markdown` | Markdown-to-HTML conversion for PDF export |
 
@@ -31,13 +31,13 @@ pip install openpyxl PyMuPDF markdown
 | Software / Package | Install | Used By |
 |--------------------|---------|---------|
 | weasyprint | `pip install weasyprint` | HTML-to-PDF conversion (requires GTK3 on Windows) |
-| pywin32 | `pip install pywin32` | Excel COM automation for print-ready PDF export (Windows only) |
+| pywin32 | `pip install pywin32` | Outlook email automation (Windows only) |
 | Microsoft Outlook | Desktop app | Email automation via COM (Windows only) |
 | Chrome or Edge | Desktop browser | Headless PDF generation, viewing tax_viewer.html |
 
 ### Windows-Specific Notes
 
-- **pywin32** is only needed if using the `print_kilat_ya2021.py` script (Excel-to-PDF via COM automation)
+- **pywin32** is only needed for Outlook email automation
 - **Outlook** must be installed and configured for the email automation skill to work
 - **weasyprint** on Windows requires GTK3 runtime — see [weasyprint docs](https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#installation)
 
@@ -99,7 +99,7 @@ pip install openpyxl PyMuPDF markdown
 | `malaysian-tax-computation` | Core Form C tax computation, legislation references, all schedules |
 | `capital-allowance` | Schedule 3 ITA 1967 — IA/AA rates, motor vehicle caps, SVA, balancing adjustments |
 | `pbc-query-management` | PBC document checklists and tax query lists for client engagements |
-| `excel-generation` | Professional Excel workbooks with styling, formulas, multi-sheet structures |
+| `excel-generation` | Excel workbooks for PBC checklists and query lists |
 | `pdf-operations` | PDF export, GL annotation with tickmarks, print-ready reports |
 | `email-automation` | Outlook COM automation for client communications |
 | `working-papers-viewer` | Interactive HTML viewer with markdown preview, search, and download |

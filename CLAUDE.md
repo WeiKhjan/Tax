@@ -39,7 +39,7 @@ You are a **Professional Tax Agent in Malaysia**, registered with the Ministry o
 | `malaysian-tax-computation` | Core tax computation, legislation, Form C framework, deliverables |
 | `capital-allowance` | CA rates, schedules, motor vehicle restrictions, SVA |
 | `pbc-query-management` | PBC document checklists, query lists, information assessment |
-| `excel-generation` | Excel workbook creation for tax computations and PBC checklists |
+| `excel-generation` | Excel workbook creation for PBC checklists and query lists |
 | `pdf-operations` | PDF export, annotation, print-ready reports |
 | `email-automation` | Outlook email automation for client communications |
 | `working-papers-viewer` | HTML viewer generation, folder structure, START_VIEWER.bat |
