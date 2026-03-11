@@ -8,14 +8,14 @@ try {
     $mail = $outlook.CreateItem(0)
 
     $mail.To = "[CLIENT_EMAIL]"
-    $mail.Subject = "Circular Tech Asia Sdn Bhd - PBC & Query List for Tax Computation YA 2025"
+    $mail.Subject = "[CLIENT COMPANY] - PBC & Query List for Tax Computation YA [YEAR]"
 
     $body = @"
-Dear Farah,
+Dear [CLIENT CONTACT NAME],
 
-Greetings from YYC.
+Greetings from [FIRM NAME].
 
-We are currently preparing the Form C Tax Computation for Circular Tech Asia Sdn Bhd for Year of Assessment 2025 (basis period: 01 March 2024 to 28 February 2025).
+We are currently preparing the Form C Tax Computation for [CLIENT COMPANY] for Year of Assessment [YEAR] (basis period: [START DATE] to [END DATE]).
 
 Based on our review of the General Ledger provided, we require additional documents and clarifications to complete the tax working papers. Please find attached:
 
@@ -53,14 +53,15 @@ Best regards,
 
 [PREPARER NAME]
 Tax Department
-YYC Holdings Sdn Bhd
+[FIRM NAME]
 
 Email: [PREPARER EMAIL]
 "@
 
     $mail.Body = $body
-    $mail.Attachments.Add("C:\Users\khjan\Downloads\Demo - YYC - Calude\Circular Tech Asia Sdn Bhd YA 2025\PBC_Checklist_CircularTech_YA2025.xlsx") | Out-Null
-    $mail.Attachments.Add("C:\Users\khjan\Downloads\Demo - YYC - Calude\Circular Tech Asia Sdn Bhd YA 2025\Query_List_CircularTech_YA2025.xlsx") | Out-Null
+    # Update paths to match client engagement folder
+    # $mail.Attachments.Add("[CLIENT_FOLDER_PATH]\PBC_Checklist.xlsx") | Out-Null
+    # $mail.Attachments.Add("[CLIENT_FOLDER_PATH]\Query_List.xlsx") | Out-Null
 
     $mail.Display()
 

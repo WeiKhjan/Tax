@@ -5,8 +5,9 @@ Uses Excel COM automation (win32com).
 import os, sys
 import win32com.client as win32
 
-EXCEL_PATH = r"C:\Users\khjan\Downloads\Demo - TAX- Calude\Tax Computation 2021 - Kilat Sejadi.xlsx"
-PDF_PATH   = r"C:\Users\khjan\Downloads\Demo - TAX- Calude\Tax Computation 2021 - Kilat Sejadi.pdf"
+import sys as _sys
+EXCEL_PATH = _sys.argv[1] if len(_sys.argv) > 1 else "Tax_Computation.xlsx"
+PDF_PATH   = _sys.argv[2] if len(_sys.argv) > 2 else "Tax_Computation.pdf"
 
 # ── Excel constants ────────────────────────────────────────────────────────
 xlLandscape  = 2

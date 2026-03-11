@@ -35,12 +35,12 @@ ws_pbc['A1'].font = title_font
 ws_pbc['A1'].alignment = Alignment(horizontal='center')
 
 ws_pbc.merge_cells('A2:E2')
-ws_pbc['A2'] = "JATI KIRANA SDN BHD"
+ws_pbc['A2'] = "[CLIENT COMPANY NAME]"
 ws_pbc['A2'].font = subtitle_font
 ws_pbc['A2'].alignment = Alignment(horizontal='center')
 
 ws_pbc.merge_cells('A3:E3')
-ws_pbc['A3'] = "Year of Assessment 2025 | Basis Period: 01 July 2024 to 30 June 2025"
+ws_pbc['A3'] = "Year of Assessment [YEAR] | Basis Period: [START DATE] to [END DATE]"
 ws_pbc['A3'].alignment = Alignment(horizontal='center')
 
 # Headers
@@ -77,14 +77,14 @@ pbc_data = [
     ("C5", "Prior year capital allowance schedule", "HIGH", "Pending", "Required for TWDV B/F"),
     ("C6", "Prior year tax computation", "HIGH", "Pending", "Required for losses B/F"),
     ("", "D. INCOME RELATED DOCUMENTS", "", "", ""),
-    ("D1", "Rental agreement - A12 Senibong Cove", "Medium", "Pending", "Tenancy with Unigra Food"),
+    ("D1", "Rental agreement - [Property Address]", "Medium", "Pending", "Tenancy with [Tenant Name]"),
     ("D2", "Property Sale & Purchase Agreement", "Medium", "Pending", "For cost verification"),
     ("", "E. TAX COMPLIANCE DOCUMENTS", "", "", ""),
     ("E1", "Prior year Form C and tax computation", "HIGH", "Pending", "Critical for tax position"),
     ("E2", "CP204 submission for current year", "Medium", "Pending", "For verification"),
     ("E3", "LHDN correspondence / Notices", "Low", "Pending", "If any"),
     ("", "F. RELATED PARTY DOCUMENTS", "", "", ""),
-    ("F1", "List of related companies", "Medium", "Pending", "[Related Company] relationship"),
+    ("F1", "List of related companies", "Medium", "Pending", "[Related company] relationship"),
     ("F2", "Directors loan agreements (if any)", "Medium", "Pending", "Interest-free advances"),
     ("F3", "Intercompany transaction listing", "Medium", "Pending", ""),
 ]
@@ -143,7 +143,9 @@ ws_pbc.column_dimensions['D'].width = 12
 ws_pbc.column_dimensions['E'].width = 35
 
 # Save PBC file
-pbc_path = r"C:\Users\khjan\Downloads\Demo - YYC - Calude\JATI KIRANA SDN BHD YA 2025\PBC_Outstanding_Items.xlsx"
+import sys
+output_dir = sys.argv[1] if len(sys.argv) > 1 else "."
+pbc_path = os.path.join(output_dir, "PBC_Outstanding_Items.xlsx")
 wb_pbc.save(pbc_path)
 print(f"Created: {pbc_path}")
 
@@ -162,12 +164,12 @@ ws_qry['A1'].font = title_font
 ws_qry['A1'].alignment = Alignment(horizontal='center')
 
 ws_qry.merge_cells('A2:F2')
-ws_qry['A2'] = "JATI KIRANA SDN BHD"
+ws_qry['A2'] = "[CLIENT COMPANY NAME]"
 ws_qry['A2'].font = subtitle_font
 ws_qry['A2'].alignment = Alignment(horizontal='center')
 
 ws_qry.merge_cells('A3:F3')
-ws_qry['A3'] = "Year of Assessment 2025 | Basis Period: 01 July 2024 to 30 June 2025"
+ws_qry['A3'] = "Year of Assessment [YEAR] | Basis Period: [START DATE] to [END DATE]"
 ws_qry['A3'].alignment = Alignment(horizontal='center')
 
 # Headers
@@ -185,12 +187,12 @@ query_data = [
      "Please confirm if there was rental income for May and June 2025.\n\nBased on the general ledger, rental receipts were only recorded from July 2024 to April 2025 (10 months only).\n\nWas the property vacant for 2 months, or is there outstanding rental receivable?",
      "Rental income must be recognized on an accrual basis under Section 4(d) ITA 1967.\n\nIf rental was receivable but not received, it should still be included as taxable income.",
      ""),
-    ("Q002", "A/C 3501/0000\n[Related Company] Sdn Bhd", "170,000.00",
-     "Please clarify:\n\n1. Is this an interest-free loan?\n2. What is the relationship between Jati Kirana and [Related Company]?\n3. Is [Related Company] a shareholder of Jati Kirana?\n4. What is [Related Company]'s paid-up capital?",
-     "IMPORTANT: If [Related Company]'s paid-up capital exceeds RM 2.5 million, Jati Kirana will NOT qualify for SME tax rates.\n\nIf related party, transactions must be at arm's length (Section 140A).",
+    ("Q002", "A/C 3501/0000\n[Related Company Name]", "170,000.00",
+     "Please clarify:\n\n1. Is this an interest-free loan?\n2. What is the relationship between [Client] and [Related Company]?\n3. Is [Related Company] a shareholder of [Client]?\n4. What is [Related Company]'s paid-up capital?",
+     "IMPORTANT: If [Related Company]'s paid-up capital exceeds RM 2.5 million, [Client] will NOT qualify for SME tax rates.\n\nIf related party, transactions must be at arm's length (Section 140A).",
      ""),
     ("Q003", "A/C 4100/0001 & 4100/0002\nAmounts Owing to Directors", "69,923.87",
-     "Please confirm:\n\n1. Are the directors' advances interest-free?\n2. Is there any formal loan agreement?\n3. When are these amounts intended to be repaid?\n\nDirectors:\n- [Director 1]: RM 39,923.87\n- [Director 2]: RM 30,000.00",
+     "Please confirm:\n\n1. Are the directors' advances interest-free?\n2. Is there any formal loan agreement?\n3. When are these amounts intended to be repaid?\n\nDirectors:\n- [Director 1]: RM [AMOUNT]\n- [Director 2]: RM [AMOUNT]",
      "Under Section 140B ITA 1967, loans from directors may be subject to deemed interest adjustment if the company has interest-bearing borrowings while receiving interest-free loans.",
      ""),
     ("Q004", "A/C 4200/1003\n[Creditor Name]", "30,300.00",
@@ -201,7 +203,7 @@ query_data = [
      "Please confirm:\n\n1. Who is [Creditor Name] and what is the relationship to the company/directors?\n2. What is the nature of this amount owing?\n3. Is [Creditor Name] a shareholder of the company?",
      "Related party transactions must be disclosed.\n\nIf shareholder, may affect beneficial ownership disclosure requirements.",
      ""),
-    ("Q006", "Fixed Assets\nInvestment Property - A12 Senibong Cove", "583,800.00",
+    ("Q006", "Fixed Assets\nInvestment Property - [Property Address]", "583,800.00",
      "Please provide:\n\n1. Date of acquisition of the property\n2. Copy of Sale & Purchase Agreement\n3. Breakdown of acquisition cost:\n   - Purchase price\n   - Stamp duty\n   - Legal fees\n   - Renovation (if any)",
      "Required to verify cost basis and determine if any portion qualifies for capital allowance (e.g., fixtures included in purchase).",
      ""),
@@ -259,13 +261,13 @@ ws_qry.column_dimensions['E'].width = 40
 ws_qry.column_dimensions['F'].width = 30
 
 # Save Query file
-qry_path = r"C:\Users\khjan\Downloads\Demo - YYC - Calude\JATI KIRANA SDN BHD YA 2025\Query_List.xlsx"
+qry_path = os.path.join(output_dir, "Query_List.xlsx")
 wb_qry.save(qry_path)
 print(f"Created: {qry_path}")
 
 # Remove old CSV files
-csv_pbc = r"C:\Users\khjan\Downloads\Demo - YYC - Calude\JATI KIRANA SDN BHD YA 2025\PBC_Outstanding_Items.csv"
-csv_qry = r"C:\Users\khjan\Downloads\Demo - YYC - Calude\JATI KIRANA SDN BHD YA 2025\Query_List.csv"
+csv_pbc = os.path.join(output_dir, "PBC_Outstanding_Items.csv")
+csv_qry = os.path.join(output_dir, "Query_List.csv")
 if os.path.exists(csv_pbc):
     os.remove(csv_pbc)
     print(f"Removed: {csv_pbc}")

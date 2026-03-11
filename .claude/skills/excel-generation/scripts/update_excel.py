@@ -5,7 +5,9 @@ from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
 # UPDATE PBC LIST - MARK CA SCHEDULE RECEIVED
 # ============================================
 
-pbc_path = r"C:\Users\khjan\Downloads\Demo - YYC - Calude\JATI KIRANA SDN BHD YA 2025\PBC_Outstanding_Items.xlsx"
+import sys
+output_dir = sys.argv[1] if len(sys.argv) > 1 else "."
+pbc_path = f"{output_dir}/PBC_Outstanding_Items.xlsx"
 wb_pbc = openpyxl.load_workbook(pbc_path)
 ws_pbc = wb_pbc.active
 
@@ -38,7 +40,7 @@ print(f"Updated: {pbc_path}")
 # UPDATE QUERY LIST - ADD CONFIRMED INFO TO Q006
 # ============================================
 
-qry_path = r"C:\Users\khjan\Downloads\Demo - YYC - Calude\JATI KIRANA SDN BHD YA 2025\Query_List.xlsx"
+qry_path = f"{output_dir}/Query_List.xlsx"
 wb_qry = openpyxl.load_workbook(qry_path)
 ws_qry = wb_qry.active
 

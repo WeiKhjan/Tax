@@ -5,8 +5,8 @@ import sys
 sys.stdout.reconfigure(encoding='utf-8')
 
 # Open the original GL PDF
-input_pdf = r"C:\Users\khjan\Downloads\Demo - YYC - Calude\ACC_TEMP\ACC\general ledger.pdf"
-output_pdf = r"C:\Users\khjan\Downloads\Demo - YYC - Calude\JATI KIRANA SDN BHD YA 2025\08_SUPPORTING_WORKINGS\GL_Extract_Tax_Instalment.pdf"
+input_pdf = sys.argv[1] if len(sys.argv) > 1 else "general_ledger.pdf"
+output_pdf = sys.argv[2] if len(sys.argv) > 2 else "GL_Extract_Tax_Instalment.pdf"
 
 doc = fitz.open(input_pdf)
 

@@ -5,18 +5,18 @@ try {
     $mail      = $outlook.CreateItem(0)
 
     $mail.To      = "[CLIENT_EMAIL]"
-    $mail.Subject = "Kilat Sejadi Sdn Bhd - Tax Computation YA2021 - For Review & Approval"
+    $mail.Subject = "[CLIENT COMPANY] - Tax Computation YA[YEAR] - For Review & Approval"
 
     $body = @"
-Dear Catherine,
+Dear [CLIENT CONTACT NAME],
 
 Greetings.
 
-Please find attached the Income Tax Computation for Kilat Sejadi Sdn Bhd for Year of Assessment 2021 (basis period: 1 January 2021 to 31 December 2021) for your review and approval.
+Please find attached the Income Tax Computation for [CLIENT COMPANY] for Year of Assessment [YEAR] (basis period: [START DATE] to [END DATE]) for your review and approval.
 
 TAX COMPUTATION SUMMARY
 =======================
-Tax Reference    : [TAX REF NO]
+Tax Reference    : C [TAX REF NO]
 Year of Assess.  : 2021
 Basis Period     : 01 Jan 2021 - 31 Dec 2021
 Business         : 64923 Licensed Money Lending Activities
@@ -57,13 +57,14 @@ Best regards,
 
 [PREPARER NAME]
 Tax Department
-YYC Holdings Sdn Bhd
+[FIRM NAME]
 Email: [PREPARER EMAIL]
 "@
 
     $mail.Body = $body
 
-    $pdfPath = "C:\Users\khjan\Downloads\Demo - TAX- Calude\Tax Computation 2021 - Kilat Sejadi.pdf"
+    # Update path to match client engagement folder
+    $pdfPath = "[CLIENT_FOLDER_PATH]\Tax Computation [YEAR] - [CLIENT COMPANY].pdf"
     $mail.Attachments.Add($pdfPath) | Out-Null
 
     $mail.Display()

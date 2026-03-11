@@ -22,7 +22,7 @@ if sys.platform == 'win32':
     sys.stdout.reconfigure(encoding='utf-8')
 
 # Configuration
-BASE_DIR = Path(r"C:\Users\khjan\Downloads\Demo - YYC - Calude\JATI KIRANA SDN BHD YA 2025")
+BASE_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
 OUTPUT_FILE = BASE_DIR / "JATI_KIRANA_YA2025_Tax_Working_Papers.pdf"
 
 # Ordered list of files to include

@@ -6,7 +6,8 @@ import openpyxl
 from openpyxl.styles import Font, Alignment, Border, Side, numbers
 from openpyxl.utils import get_column_letter
 
-OUTPUT_PATH = r"C:\Users\khjan\Downloads\Demo - TAX- Calude\Tax Computation 2021 - Kilat Sejadi.xlsx"
+import sys
+OUTPUT_PATH = sys.argv[1] if len(sys.argv) > 1 else "Tax_Computation.xlsx"
 
 # ── Style helpers ─────────────────────────────────────────────────────────────
 
